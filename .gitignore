@@ -4,6 +4,8 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
+.idea
+.vscode
 
 # Crash log files
 crash.log
