@@ -10,11 +10,13 @@ resource "random_id" "suffix" {
 
   byte_length = 4
 }
-
 resource "google_spanner_instance" "default" {
   config       = "regional-us-west3"
   display_name = local.master_instance_name
-  num_nodes    = var.num_nodes
+  processing_units    = var.processing_units
+  labels = {
+    "env" = var.environment
+  }
 }
 
 resource "google_spanner_database" "default" {

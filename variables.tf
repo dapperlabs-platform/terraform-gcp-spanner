@@ -26,8 +26,15 @@ variable "additional_users" {
   default = []
 }
 
-variable "num_nodes" {
-  description = "Number of nodes"
+variable "processing_units" {
+  description = "Processing Units"
   type        = number
-  default     = 1
+  default     = 1000
+}
+
+
+variable "environment" {
+  description = "Resource Environment"
+  type = string
+  default = "staging"
 }
