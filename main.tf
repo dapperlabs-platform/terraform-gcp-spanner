@@ -19,7 +19,7 @@ resource "google_spanner_instance" "default" {
 
 resource "google_spanner_database" "default" {
   for_each = local.databases
-  instance = google_spanner_instance.default
+  instance = google_spanner_instance.default.name
   name     = each.value.name
   deletion_protection = false
 }
