@@ -17,24 +17,21 @@ variable "databases" {
   }))
   default = []
 }
-variable "additional_users" {
-  description = "A list of users to be created in your cluster"
-  type = list(object({
-    name     = string
-    password = string
-  }))
-  default = []
+
+variable "instance_iam" {
+  description = "Instance IAM bindings in {ROLE => [MEMBERS]} format."
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "database_iam" {
+  description = "Database bindings in {ROLE => [MEMBERS]} format."
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "processing_units" {
   description = "Processing Units"
   type        = number
   default     = 1000
-}
-
-
-variable "environment" {
-  description = "Resource Environment"
-  type = string
-  default = "staging"
 }
