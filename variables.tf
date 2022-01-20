@@ -24,11 +24,20 @@ variable "instance_iam" {
   default     = {}
 }
 
-variable "database_iam" {
-  description = "Database bindings in {ROLE => [MEMBERS]} format."
-  type        = map(list(string))
-  default     = {}
+variable "db_iam" {
+  type = list(object({
+    role = string
+    database = string
+    members = list(string)
+  }))
+  default = []
 }
+
+#variable "database_iam" {
+#  description = "Database bindings in {ROLE => [MEMBERS]} format."
+#  type        = map(list(string))
+#  default     = {}
+#}
 
 variable "processing_units" {
   description = "Processing Units"
