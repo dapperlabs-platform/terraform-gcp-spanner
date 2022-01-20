@@ -31,10 +31,10 @@ resource "google_spanner_instance_iam_member" "instance" {
 }
 
 # Database IAM
-resource "google_spanner_database_iam_member" "database" {
-  for_each = var.database_iam
-  instance = google_spanner_instance.default.name
-  database = google_spanner_database.default.name
-  role     = each.key
-  member   = each.value
-}
+#resource "google_spanner_database_iam_member" "database" {
+#  for_each = var.database_iam
+#  instance = google_spanner_instance.default.name
+#  database = google_spanner_database.default.name
+#  role     = each.key
+#  member   = each.value
+#}
