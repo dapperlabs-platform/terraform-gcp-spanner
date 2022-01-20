@@ -35,3 +35,9 @@ variable "processing_units" {
   type        = number
   default     = 1000
 }
+
+variable "database_name" {
+  description = "Database to attach IAM policies to"
+  type        = string
+  default     = ""
+}

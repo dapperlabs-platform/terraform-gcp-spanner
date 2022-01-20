@@ -23,18 +23,18 @@ resource "google_spanner_database" "default" {
 }
 
 # Instance IAM
-resource "google_spanner_instance_iam_member" "instance" {
+resource "google_spanner_instance_iam_binding" "instance" {
   for_each = var.instance_iam
   instance = google_spanner_instance.default.name
   role     = each.key
-  member   = each.value
+  members  = each.value
 }
 
 # Database IAM
-resource "google_spanner_database_iam_member" "database" {
+resource "google_spanner_database_iam_binding" "database" {
   for_each = var.database_iam
   instance = google_spanner_instance.default.name
-  database = google_spanner_database.default.name
-  role     = google_spanner_database.default[each.key]
-  member   = google_spanner_database.default[each.value]
+  database = var.database_name
+  role     = each.key
+  members  = each.value
 }
