@@ -13,7 +13,6 @@ variable "instance_iam" {
     role    = string
     members = list(string)
   }))
-  default = []
 }
 
 variable "processing_units" {
@@ -29,5 +28,12 @@ variable "databases" {
     charset   = string
     collation = string
   }))
-  default = []
+}
+
+variable "iams" {
+  type = map(object({
+    role          = string
+    database_name = string
+    members       = list(string)
+  }))
 }

@@ -34,4 +34,5 @@ resource "google_spanner_instance_iam_binding" "instance" {
 module "db-iam" {
   source   = "./spanner-db-iam"
   instance = google_spanner_instance.default.name
+  iams     = var.iams
 }

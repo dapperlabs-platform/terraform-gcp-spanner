@@ -4,7 +4,6 @@ variable "iams" {
     database_name = string
     members       = list(string)
   }))
-  default = {}
 }
 
 variable "instance" {
