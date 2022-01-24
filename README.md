@@ -32,22 +32,22 @@ module "cloud-spanner-instance" {
   ]
   
   database_iam = {
-    "admins_waterhose" = {
+    "admins_db2" = {
       role          = "roles/spanner.databaseAdmin",
       database_name = "db2",
       members       = ["group:admin@dapperlabs.com"]
     },
-    "readers_waterhose" = {
+    "readers_db2" = {
       role          = "roles/spanner.viewer",
       database_name = "db2",
       members       = ["group:readers@dapperlabs.com"]
     },
-    "admins_consumer" = {
+    "admins_db1" = {
       role          = "roles/spanner.databaseAdmin",
       database_name = "db1",
       members       = ["group:admin@dapperlabs.com"]
     },
-    "readers_consumer" = {
+    "readers_db1" = {
       role          = "roles/spanner.viewer",
       database_name = "db1",
       members       = ["group:readers@dapperlabs.com"]
