@@ -30,7 +30,7 @@ variable "databases" {
   }))
 }
 
-variable "iams" {
+variable "database_iam" {
   type = map(object({
     role          = string
     database_name = string

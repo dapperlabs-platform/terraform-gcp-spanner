@@ -31,7 +31,7 @@ module "cloud-spanner-instance" {
     },
   ]
   
-  iams = {
+  database_iam = {
     "admins_waterhose" = {
       role          = "roles/spanner.databaseAdmin",
       database_name = "db2",
