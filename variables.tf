@@ -8,16 +8,6 @@ variable "name" {
   description = "The name of the instance"
 }
 
-variable "databases" {
-  description = "A list of databases to be created"
-  type = list(object({
-    name      = string
-    charset   = string
-    collation = string
-  }))
-  default = []
-}
-
 variable "instance_iam" {
   type = list(object({
     role    = string
@@ -26,17 +16,18 @@ variable "instance_iam" {
   default = []
 }
 
-variable "database_iam" {
-  type = list(object({
-    role          = string
-    database_name = string
-    members       = list(string)
-  }))
-  default = []
-}
-
 variable "processing_units" {
   description = "Processing Units"
   type        = number
   default     = 1000
+}
+
+variable "databases" {
+  description = "A list of databases to be created"
+  type = list(object({
+    name      = string
+    charset   = string
+    collation = string
+  }))
+  default = []
 }

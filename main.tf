@@ -1,8 +1,7 @@
 locals {
   master_instance_name = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
-  databases            = { for db in var.databases : db.name => db }
-  database_iam         = { for iam in var.database_iam : iam.role => iam }
   instance_iam         = { for iam in var.instance_iam : iam.role => iam }
+  databases            = { for db in var.databases : db.name => db }
 }
 
 resource "random_id" "suffix" {
@@ -32,10 +31,7 @@ resource "google_spanner_instance_iam_binding" "instance" {
 }
 
 # Database IAM
-resource "google_spanner_database_iam_binding" "database" {
-  for_each = local.database_iam
+module "db-iam" {
+  source   = "./spanner-db-iam"
   instance = google_spanner_instance.default.name
-  database = each.value.database_name
-  role     = each.value.role
-  members  = each.value.members
 }
