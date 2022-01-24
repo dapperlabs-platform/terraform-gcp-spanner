@@ -6,42 +6,52 @@ Terraform Code for provisioning GCP spanner resources
 module "cloud-spanner-instance" {
   source = "github.com/dapperlabs-platform/terraform-gcp-spanner?ref=v0.0.3"
   
-   database_name = "db1"
+  instance_iam = [
+    # Admin
+    { role    = "roles/spanner.admin", members = ["group:admin@dapperlabs.com"] },
+    { role    = "roles/spanner.backupAdmin", members = ["group:admin@dapperlabs.com"]},
+    { role    = "roles/spanner.restoreAdmin", members = ["group:admin@dapperlabs.com"]},
 
-      instance_iam = {
-        # Admin
-        "roles/spanner.admin"        = ["group:admin@dapperlabs.com"]
-        "roles/spanner.backupAdmin"  = ["group:admin@dapperlabs.com"]
-        "roles/spanner.restoreAdmin" = ["group:admin@dapperlabs.com"]
-    
-        # Writer
-        "roles/spanner.backupWriter" = ["group:writers@dapperlabs.com"]
-    
-        # Viewer
-        "roles/spanner.viewer" = ["group:readers@dapperlabs.com"]
-      }
+    # Writer
+    { role    = "roles/spanner.backupWriter", members = ["group:writers@dapperlabs.com"]},
 
-    database_iam = {
-      # Admin
-      "roles/spanner.databaseAdmin" = ["group:admin@dapperlabs.com"]
-
-      # Writer
-      "roles/spanner.databaseUser" = ["group:writers@dapperlabs.com"]
-
-      # Reader
-      "roles/spanner.databaseReader" = ["group:readers@dapperlabs.com"]
-    }
+    # Readers
+    { role    = "roles/spanner.viewer", members = ["group:readers@dapperlabs.com"]}
+   ]
 
    name = "demo-instance"
    databases = [{
-    name      = "consumer-db"
+    name      = "db1"
     charset   = "UTF8"
     collation = "en_US.UTF8"
     }, {
-    name      = "waterhose-db"
+    name      = "db1"
     charset   = "UTF8"
     collation = "en_US.UTF8"
     },
   ]
+  
+  iams = {
+    "admins_waterhose" = {
+      role          = "roles/spanner.databaseAdmin",
+      database_name = "db2",
+      members       = ["group:admin@dapperlabs.com"]
+    },
+    "readers_waterhose" = {
+      role          = "roles/spanner.viewer",
+      database_name = "db2",
+      members       = ["group:readers@dapperlabs.com"]
+    },
+    "admins_consumer" = {
+      role          = "roles/spanner.databaseAdmin",
+      database_name = "db1",
+      members       = ["group:admin@dapperlabs.com"]
+    },
+    "readers_consumer" = {
+      role          = "roles/spanner.viewer",
+      database_name = "db1",
+      members       = ["group:readers@dapperlabs.com"]
+    }
+  }
 }
 ```

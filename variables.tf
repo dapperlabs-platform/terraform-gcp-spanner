@@ -8,26 +8,11 @@ variable "name" {
   description = "The name of the instance"
 }
 
-variable "databases" {
-  description = "A list of databases to be created"
-  type = list(object({
-    name      = string
-    charset   = string
-    collation = string
-  }))
-  default = []
-}
-
 variable "instance_iam" {
-  description = "Instance IAM bindings in {ROLE => [MEMBERS]} format."
-  type        = map(list(string))
-  default     = {}
-}
-
-variable "database_iam" {
-  description = "Database bindings in {ROLE => [MEMBERS]} format."
-  type        = map(list(string))
-  default     = {}
+  type = list(object({
+    role    = string
+    members = list(string)
+  }))
 }
 
 variable "processing_units" {
@@ -36,8 +21,19 @@ variable "processing_units" {
   default     = 1000
 }
 
-variable "database_name" {
-  description = "Database to attach IAM policies to"
-  type        = string
-  default     = ""
+variable "databases" {
+  description = "A list of databases to be created"
+  type = list(object({
+    name      = string
+    charset   = string
+    collation = string
+  }))
+}
+
+variable "iams" {
+  type = map(object({
+    role          = string
+    database_name = string
+    members       = list(string)
+  }))
 }
