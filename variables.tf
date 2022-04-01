@@ -37,3 +37,38 @@ variable "database_iam" {
     members       = list(string)
   }))
 }
+
+# Database Backup
+variable "enable_automated_backup" {
+  type = bool
+  description = "Enable Spanner Automated Database Backup"
+  default = false
+}
+
+variable "database_ids" {
+  type        = set(string)
+  description = "Spanner databases you want to backup"
+}
+
+variable "gcp_project_id" {
+  type = string
+  description = "GCP project in which the spanner instance exist"
+}
+
+variable "location" {
+  type        = string
+  description = "Location for App Engine"
+}
+
+variable "pubsub_topic" {
+  type = string
+}
+
+variable "region" {
+  type = string
+}
+
+variable "spanner_instance_id" {
+  type        = string
+  description = "Spanner Instance ID where you database is located that you want to backup"
+}
