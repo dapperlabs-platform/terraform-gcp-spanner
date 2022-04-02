@@ -49,3 +49,32 @@ variable deletion_protection {
   type = bool
   default = false
 }
+
+# Optional Database Backup
+variable "enable_automated_backup" {
+  type = bool
+  description = "Enable Spanner Automated Databases Backup for the instance"
+  default = false
+}
+
+variable "gcp_project_id" {
+  type = string
+  description = "GCP project in which the spanner instance exist"
+}
+
+variable "location" {
+  type        = string
+  description = "Location for App Engine"
+  default = "us-central"
+}
+
+variable "pubsub_topic" {
+  type = string
+  default = "spanner-scheduled-backup-topic"
+}
+
+variable "region" {
+  type = string
+  description = "GCP Region"
+  default = "us-central1"
+}

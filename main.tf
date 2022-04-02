@@ -2,6 +2,7 @@ locals {
   master_instance_name = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
   instance_iam         = { for iam in var.instance_iam : iam.role => iam }
   databases            = { for db in var.databases : db.name => db }
+  database_ids = [ for item in var.databases: item.name ]
 }
 
 resource "random_id" "suffix" {
@@ -35,4 +36,16 @@ module "db-iam" {
   source   = "./spanner-db-iam"
   instance = google_spanner_instance.default.name
   iams     = var.database_iam
+}
+
+# Databases Backup
+module "automated-db-backup" {
+  count = var.enable_automated_backup ? 1 : 0
+  source  = "github.com/dapperlabs-platform/terraform-gcp-spanner-backup?ref=v0.1.1"
+  database_ids = local.database_ids
+  spanner_instance_id = google_spanner_instance.default.id
+  gcp_project_id = var.gcp_project_id
+  location = var.location
+  pubsub_topic = var.pubsub_topic
+  region = var.region
 }
