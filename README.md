@@ -20,6 +20,9 @@ module "cloud-spanner-instance" {
    ]
 
    name = "demo-instance"
+   enable_automated_backup = true
+   gcp_project_id = "test-project"
+   
    databases = [{
     name      = "db1"
     charset   = "UTF8"
