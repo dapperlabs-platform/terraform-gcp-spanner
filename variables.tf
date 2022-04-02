@@ -27,7 +27,7 @@ variable "databases" {
     name      = string
     charset   = string
     collation = string
-    delete_protection = bool
+    deletion_protection = bool
   }))
 }
 
