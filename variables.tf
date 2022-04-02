@@ -46,5 +46,5 @@ variable config {
 
 variable deletion_protection {
   type = bool
-  default = true
+  default = false
 }

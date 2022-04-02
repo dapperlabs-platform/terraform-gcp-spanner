@@ -10,7 +10,7 @@ resource "random_id" "suffix" {
 }
 
 resource "google_spanner_instance" "default" {
-  config           = "regional-us-west3"
+  config           = var.config
   display_name     = local.master_instance_name
   processing_units = var.processing_units
 }
@@ -19,7 +19,7 @@ resource "google_spanner_database" "default" {
   for_each            = local.databases
   instance            = google_spanner_instance.default.name
   name                = each.value.name
-  deletion_protection = false
+  deletion_protection = var.deletion_protection
 }
 
 # Instance IAM
