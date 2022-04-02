@@ -4,7 +4,7 @@ Terraform Code for provisioning GCP spanner resources
 ### Example Usage
 ```
 module "cloud-spanner-instance" {
-  source = "github.com/dapperlabs-platform/terraform-gcp-spanner?ref=v0.1.7"
+  source = "github.com/dapperlabs-platform/terraform-gcp-spanner?ref=v0.1.8"
   
   instance_iam = [
     # Admin
