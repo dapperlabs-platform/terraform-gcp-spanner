@@ -37,3 +37,14 @@ variable "database_iam" {
     members       = list(string)
   }))
 }
+
+variable config {
+  type = string
+  description = "The name of the instance's configuration (similar but not quite the same as a region)"
+  default = "regional-us-central1"
+}
+
+variable deletion_protection {
+  type = bool
+  default = true
+}
