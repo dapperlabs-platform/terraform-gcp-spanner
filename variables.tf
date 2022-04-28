@@ -21,12 +21,14 @@ variable "processing_units" {
   default     = 1000
 }
 
+# database_dialect values: GOOGLE_STANDARD_SQL, POSTGRESQL
 variable "databases" {
   description = "A list of databases to be created"
   type = list(object({
-    name      = string
-    charset   = string
-    collation = string
+    name                = string
+    charset             = string
+    collation           = string
+    database_dialect    = string # OPTIONAL, default GOOGLE_STANDARD_SQL
     deletion_protection = bool
   }))
 }
