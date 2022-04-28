@@ -29,7 +29,7 @@ resource "google_spanner_database" "default" {
 }
 
 # Instance IAM
-resource "google_spanner_instance_iam_binding" "instance" {
+resource "google_spanner_instance_iam_member" "instance" {
   for_each = local.instance_iam
   instance = google_spanner_instance.default.name
   role     = each.value.role
