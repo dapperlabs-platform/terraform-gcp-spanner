@@ -41,42 +41,43 @@ variable "database_iam" {
   }))
 }
 
-variable config {
-  type = string
+variable "config" {
+  type        = string
   description = "The name of the instance's configuration (similar but not quite the same as a region)"
-  default = "regional-us-central1"
+  default     = "regional-us-central1"
 }
 
-variable deletion_protection {
-  type = bool
+variable "deletion_protection" {
+  type    = bool
   default = false
 }
 
 # Optional Database Backup
 variable "enable_automated_backup" {
-  type = bool
+  type        = bool
   description = "Enable Spanner Automated Databases Backup for the instance"
-  default = false
+  default     = false
 }
 
 variable "gcp_project_id" {
-  type = string
-  description = "GCP project in which the spanner instance exist"
+  type        = string
+  description = "GCP project in which the spanner backup exist"
+  default     = ""
 }
 
 variable "location" {
   type        = string
   description = "Location for App Engine"
-  default = "us-central"
+  default     = "us-central"
 }
 
 variable "pubsub_topic" {
-  type = string
+  type    = string
   default = "spanner-scheduled-backup-topic"
 }
 
 variable "region" {
-  type = string
+  type        = string
   description = "GCP Region"
-  default = "us-central1"
+  default     = "us-central1"
 }
