@@ -21,7 +21,7 @@ resource "google_spanner_database" "default" {
   instance            = google_spanner_instance.default.name
   name                = each.value.name
   database_dialect    = coalesce(each.value.database_dialect, "GOOGLE_STANDARD_SQL")
-  deletion_protection = each.value.deletion_protection
+  deletion_protection = each.value.deletion_protection ? true : false
 }
 
 # Instance IAM

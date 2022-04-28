@@ -28,8 +28,8 @@ variable "databases" {
     name                = string
     charset             = string
     collation           = string
-    database_dialect    = string # OPTIONAL, default GOOGLE_STANDARD_SQL
-    deletion_protection = bool
+    database_dialect    = optional(string) # default GOOGLE_STANDARD_SQL
+    deletion_protection = optional(bool) # default false
   }))
 }
 
