@@ -1,3 +1,7 @@
+terraform {
+  experiments = [module_variable_optional_attrs]
+}
+
 locals {
   master_instance_name = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
   instance_iam         = { for iam in var.instance_iam : iam.role => iam }
@@ -20,7 +24,8 @@ resource "google_spanner_database" "default" {
   for_each            = local.databases
   instance            = google_spanner_instance.default.name
   name                = each.value.name
-  deletion_protection = each.value.deletion_protection
+  database_dialect    = coalesce(each.value.database_dialect, "GOOGLE_STANDARD_SQL")
+  deletion_protection = coalesce(each.value.deletion_protection, true) ? true : false
 }
 
 # Instance IAM
