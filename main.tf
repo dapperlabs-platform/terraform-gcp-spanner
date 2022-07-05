@@ -24,7 +24,6 @@ resource "google_spanner_database" "default" {
   for_each            = local.databases
   instance            = google_spanner_instance.default.name
   name                = each.value.name
-  database_dialect    = coalesce(each.value.database_dialect, "GOOGLE_STANDARD_SQL")
   deletion_protection = coalesce(each.value.deletion_protection, true) ? true : false
 }
 
