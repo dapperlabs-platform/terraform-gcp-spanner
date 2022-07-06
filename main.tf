@@ -46,7 +46,7 @@ module "db-iam" {
 # Databases Backup
 module "automated-db-backup" {
   count               = var.enable_automated_backup ? 1 : 0
-  source              = "github.com/dapperlabs-platform/terraform-gcp-spanner-backup?ref=v0.1.5"
+  source              = "github.com/dapperlabs-platform/terraform-gcp-spanner-backup?ref=v0.1.6"
   database_ids        = local.database_ids
   spanner_instance_id = google_spanner_instance.default.name
   gcp_project_id      = var.gcp_project_id
