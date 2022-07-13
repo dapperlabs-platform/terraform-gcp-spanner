@@ -17,6 +17,7 @@ resource "random_id" "suffix" {
 resource "google_spanner_instance" "default" {
   config           = var.config
   display_name     = local.master_instance_name
+  name             = local.master_instance_name
   processing_units = var.processing_units
 }
 
