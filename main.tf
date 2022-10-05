@@ -63,7 +63,7 @@ module "automated-db-backup" {
   database_ids        = local.database_ids
   spanner_instance_id = google_spanner_instance.default.name
   gcp_project_id      = data.google_client_config.this.project
-  location            = var.backup_location
+  location            = var.backup_app_engine_location
   pubsub_topic        = var.backup_pubsub_topic
   region              = var.backup_region
 }
