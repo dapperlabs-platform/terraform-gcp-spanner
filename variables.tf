@@ -44,7 +44,6 @@ variable "database_iam" {
 variable "config" {
   type        = string
   description = "The name of the instance's configuration (e.g. staging: us-west1, europe-west-1, asia-east2 | prod: nam10, eur5, asia1 | see https://cloud.google.com/spanner/docs/instance-configurations)"
-  default     = ""
 }
 
 variable "deletion_protection" {
