@@ -1,8 +1,8 @@
-variable "random_instance_name" {
-  type        = bool
-  description = "Sets random suffix at the end of the instance resource name"
-  default     = false
+variable "display_name" {
+  type        = string
+  description = "The display name of the instance"
 }
+
 variable "name" {
   type        = string
   description = "The name of the instance"
@@ -43,8 +43,7 @@ variable "database_iam" {
 
 variable "config" {
   type        = string
-  description = "The name of the instance's configuration (similar but not quite the same as a region)"
-  default     = "regional-us-central1"
+  description = "The name of the instance's configuration (e.g. staging: us-west1, europe-west-1, asia-east2 | prod: nam10, eur5, asia1 | see https://cloud.google.com/spanner/docs/instance-configurations)"
 }
 
 variable "deletion_protection" {
@@ -53,31 +52,25 @@ variable "deletion_protection" {
 }
 
 # Optional Database Backup
-variable "enable_automated_backup" {
+variable "backup_enabled" {
   type        = bool
   description = "Enable Spanner Automated Databases Backup for the instance"
   default     = false
 }
 
-variable "gcp_project_id" {
+variable "backup_app_engine_location" {
   type        = string
-  description = "GCP project in which the spanner backup exist"
+  description = "Location for App Engine"
   default     = ""
 }
 
-variable "location" {
-  type        = string
-  description = "Location for App Engine"
-  default     = "us-central"
-}
-
-variable "pubsub_topic" {
+variable "backup_pubsub_topic" {
   type    = string
   default = "spanner-scheduled-backup-topic"
 }
 
-variable "region" {
+variable "backup_region" {
   type        = string
-  description = "GCP Region"
-  default     = "us-central1"
+  description = "GCP Region to be used for GCS bucket and Cloud Scheduler job"
+  default     = ""
 }
