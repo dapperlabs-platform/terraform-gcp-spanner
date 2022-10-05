@@ -19,9 +19,9 @@ module "cloud-spanner-instance" {
     { role    = "roles/spanner.viewer", members = ["group:readers@dapperlabs.com"]}
    ]
 
-   name = "demo-instance"
-   enable_automated_backup = true
-   gcp_project_id = "test-project"
+   display_name = "demo-instance"
+   name         = "demo-instance"
+   config.      = "regional-us-central1" # see https://cloud.google.com/spanner/docs/instance-configurations
    
    databases = [{
     name      = "db1"
