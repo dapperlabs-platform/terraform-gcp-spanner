@@ -20,11 +20,6 @@ locals {
 
 data "google_client_config" "this" {}
 
-resource "random_id" "suffix" {
-  count       = var.random_instance_name ? 1 : 0
-  byte_length = 4
-}
-
 resource "google_spanner_instance" "default" {
   config           = var.config
   display_name     = var.display_name
