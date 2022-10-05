@@ -3,7 +3,6 @@ terraform {
 }
 
 locals {
-  master_instance_name = var.random_instance_name ? "${var.name}-${random_id.suffix[0].hex}" : var.name
   #  instance_iam         = { for iam in var.instance_iam : iam.role => iam }
   instance_role_member = flatten([
     for iamEntry in var.instance_iam :
@@ -28,8 +27,8 @@ resource "random_id" "suffix" {
 
 resource "google_spanner_instance" "default" {
   config           = var.config
-  display_name     = local.master_instance_name
-  name             = local.master_instance_name
+  display_name     = var.display_name
+  name             = var.name
   processing_units = var.processing_units
 }
 

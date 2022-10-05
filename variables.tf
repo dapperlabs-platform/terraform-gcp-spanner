@@ -3,6 +3,12 @@ variable "random_instance_name" {
   description = "Sets random suffix at the end of the instance resource name"
   default     = false
 }
+
+variable "display_name" {
+  type        = string
+  description = "The display name of the instance"
+}
+
 variable "name" {
   type        = string
   description = "The name of the instance"
