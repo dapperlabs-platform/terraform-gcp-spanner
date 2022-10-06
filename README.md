@@ -21,7 +21,7 @@ module "cloud-spanner-instance" {
 
    display_name = "demo-instance"
    name         = "demo-instance"
-   config.      = "regional-us-central1" # see https://cloud.google.com/spanner/docs/instance-configurations
+   config       = "regional-us-central1" # see https://cloud.google.com/spanner/docs/instance-configurations
    
    databases = [{
     name      = "db1"
