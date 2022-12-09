@@ -1,9 +1,4 @@
-terraform {
-  experiments = [module_variable_optional_attrs]
-}
-
 locals {
-  #  instance_iam         = { for iam in var.instance_iam : iam.role => iam }
   instance_role_member = flatten([
     for iamEntry in var.instance_iam :
     [
