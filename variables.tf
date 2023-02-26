@@ -1,11 +1,12 @@
-variable "display_name" {
-  type        = string
-  description = "The display name of the instance"
-}
-
 variable "name" {
   type        = string
   description = "The name of the instance"
+}
+
+variable "labels" {
+  type        = map(string)
+  description = "Instance labels"
+  default     = {}
 }
 
 variable "instance_iam" {
@@ -28,8 +29,8 @@ variable "databases" {
     name                = string
     charset             = string
     collation           = string
-    database_dialect    = optional(string) # default GOOGLE_STANDARD_SQL
-    deletion_protection = optional(bool)   # default false
+    database_dialect    = optional(string, "GOOGLE_STANDARD_SQL")
+    deletion_protection = optional(bool, false)
   }))
 }
 
