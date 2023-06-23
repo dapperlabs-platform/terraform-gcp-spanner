@@ -49,7 +49,7 @@ module "db-iam" {
 # Databases Backup
 module "automated-db-backup" {
   count          = (var.backup_enabled == true ? 1 : 0)
-  source         = "github.com/dapperlabs-platform/terraform-gcp-spanner-backup?ref=a_better_backup"
+  source         = "github.com/dapperlabs-platform/terraform-gcp-spanner-backup?ref=v0.2.0"
   database_names = local.database_ids
   instance_name  = google_spanner_instance.default.name
   project_name   = data.google_client_config.this.project
