@@ -58,20 +58,3 @@ variable "backup_enabled" {
   description = "Enable Spanner Automated Databases Backup for the instance"
   default     = false
 }
-
-variable "backup_app_engine_location" {
-  type        = string
-  description = "Location for App Engine"
-  default     = ""
-}
-
-variable "backup_pubsub_topic" {
-  type    = string
-  default = "spanner-scheduled-backup-topic"
-}
-
-variable "backup_region" {
-  type        = string
-  description = "GCP Region to be used for GCS bucket and Cloud Scheduler job"
-  default     = ""
-}
