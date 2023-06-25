@@ -58,3 +58,9 @@ variable "backup_enabled" {
   description = "Enable Spanner Automated Databases Backup for the instance"
   default     = false
 }
+
+variable "backup_expire_time" {
+  type        = number
+  description = "Backup exipiration time in seconds"
+  default     = 86400
+}
