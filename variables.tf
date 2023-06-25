@@ -56,7 +56,7 @@ variable "deletion_protection" {
 variable "backup_enabled" {
   type        = bool
   description = "Enable Spanner Automated Databases Backup for the instance"
-  default     = false
+  default     = true
 }
 variable "backup_deadline" {
   description = "The deadline for the backup schedule"
