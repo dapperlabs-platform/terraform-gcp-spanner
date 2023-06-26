@@ -56,5 +56,34 @@ variable "deletion_protection" {
 variable "backup_enabled" {
   type        = bool
   description = "Enable Spanner Automated Databases Backup for the instance"
-  default     = false
+  default     = true
+}
+variable "backup_deadline" {
+  description = "The deadline for the backup schedule"
+  type        = string
+  default     = "320s"
+}
+
+variable "backup_expire_time" {
+  description = "Seconds until the backup expires"
+  type        = number
+  default     = 86400
+}
+
+variable "backup_schedule" {
+  description = "The Backup Schedule in CRON format"
+  type        = string
+  default     = "0 0 * * *"
+}
+
+variable "backup_schedule_region" {
+  description = "The schedule to be enabled on scheduler to trigger spanner DB backup"
+  type        = string
+  default     = "us-west1"
+}
+
+variable "backup_time_zone" {
+  description = "The timezone to be used for the backup schedule"
+  type        = string
+  default     = "America/Vancouver"
 }
