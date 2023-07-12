@@ -52,25 +52,31 @@ variable "deletion_protection" {
   default = false
 }
 
-variable "scale_in_cooling_minutes" {
+variable "autoscaling_enabled" {
+  type        = bool
+  description = "Enable autoscaling for the spanner instance"
+  default     = true
+}
+
+variable "autoscale_in_cooling_minutes" {
   type        = number
   default     = 30
   description = "Minutes to wait after scaling IN or OUT before a scale IN event can be processed."
 }
 
-variable "scale_out_cooling_minutes" {
+variable "autoscale_out_cooling_minutes" {
   type        = number
   default     = 2
   description = "Minutes to wait after scaling IN or OUT before a scale OUT event can be processed."
 }
 
-variable "scaling_method" {
+variable "autoscaling_method" {
   type        = string
   default     = "LINEAR"
   description = "Algorithm that should be used to manage the scaling of the spanner instance: STEPWISE, LINEAR, DIRECT"
 }
 
-variable "scaling_schedule" {
+variable "autoscaling_schedule" {
   type    = string
   default = "*/2 * * * *"
 }
