@@ -17,7 +17,7 @@ module "spanner" {
 
   terraform_spanner_state        = var.terraform_spanner_state
   terraform_spanner_test         = false
-  project_id                     = local.app_project_id
+  project_id                     = var.project_id
   spanner_name                   = var.spanner_name
   spanner_state_name             = var.spanner_state_name
   spanner_state_processing_units = var.spanner_state_processing_units

@@ -52,6 +52,7 @@ variable "deletion_protection" {
   default = false
 }
 
+# Optional Autoscaling
 variable "autoscaling_enabled" {
   type        = bool
   description = "Enable autoscaling for the spanner instance"
