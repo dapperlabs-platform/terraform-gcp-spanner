@@ -48,15 +48,15 @@ module "db-iam" {
 
 # Database Autoscaler
 module "db-autoscaler" {
-  count                          = (var.autoscaling_enabled == true ? 1 : 0)
+  count                          = (var.autoscale_enabled == true ? 1 : 0)
   source                         = "./spanner-autoscaler"
   project_id                     = data.google_client_config.this.project
   max_size                       = var.autoscale_max_size
   min_size                       = var.autoscale_min_size
   scale_in_cooling_minutes       = var.autoscale_in_cooling_minutes
   scale_out_cooling_minutes      = var.autoscale_out_cooling_minutes
-  scaling_method                 = var.autoscaling_method
-  schedule                       = var.autoscaling_schedule
+  scaling_method                 = var.autoscale_method
+  schedule                       = var.autoscale_schedule
   spanner_name                   = google_spanner_instance.default.name
   spanner_state_name             = "${google_spanner_instance.default.name}-state"
   spanner_state_processing_units = 100
