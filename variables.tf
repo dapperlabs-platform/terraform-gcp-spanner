@@ -55,7 +55,7 @@ variable "deletion_protection" {
 variable "autoscaling_enabled" {
   type        = bool
   description = "Enable autoscaling for the spanner instance"
-  default     = true
+  default     = false
 }
 
 variable "autoscale_in_cooling_minutes" {
