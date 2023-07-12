@@ -71,10 +71,22 @@ variable "autoscale_out_cooling_minutes" {
   description = "Minutes to wait after scaling IN or OUT before a scale OUT event can be processed."
 }
 
+variable "autoscaling_max_size" {
+  type        = number
+  default     = 2000
+  description = "Maximum size that the spanner instance can be scaled out to."
+}
+
 variable "autoscaling_method" {
   type        = string
   default     = "LINEAR"
   description = "Algorithm that should be used to manage the scaling of the spanner instance: STEPWISE, LINEAR, DIRECT"
+}
+
+variable "autoscaling_min_size" {
+  type        = number
+  default     = 100
+  description = "Minimum size that the spanner instance can be scaled in to."
 }
 
 variable "autoscaling_schedule" {
