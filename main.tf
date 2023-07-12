@@ -51,6 +51,8 @@ module "db-autoscaler" {
   count                          = (var.autoscaling_enabled == true ? 1 : 0)
   source                         = "./spanner-autoscaler"
   project_id                     = data.google_client_config.this.project
+  max_size                       = var.autoscale_max_size
+  min_size                       = var.autoscale_min_size
   scale_in_cooling_minutes       = var.autoscale_in_cooling_minutes
   scale_out_cooling_minutes      = var.autoscale_out_cooling_minutes
   scaling_method                 = var.autoscaling_method
