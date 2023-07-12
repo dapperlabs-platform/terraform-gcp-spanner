@@ -2,6 +2,7 @@ module "autoscaler-base" {
   source = "./modules/autoscaler-base"
 
   project_id = var.project_id
+  region     = var.region
 }
 
 module "autoscaler-functions" {
@@ -9,6 +10,7 @@ module "autoscaler-functions" {
 
   project_id      = var.project_id
   poller_sa_email = module.autoscaler-base.poller_sa_email
+  region          = var.region
   scaler_sa_email = module.autoscaler-base.scaler_sa_email
 }
 
