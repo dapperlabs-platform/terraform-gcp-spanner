@@ -46,6 +46,21 @@ module "db-iam" {
   depends_on = [google_spanner_database.default]
 }
 
+# Database Autoscaler
+module "db-autoscaler" {
+  source                         = "./spanner-autoscaler"
+  project_id                     = data.google_client_config.this.project
+  scale_in_cooling_minutes       = var.scale_in_cooling_minutes
+  scale_out_cooling_minutes      = var.scale_out_cooling_minutes
+  scaling_method                 = var.scaling_method
+  schedule                       = var.scaling_schedule
+  spanner_name                   = google_spanner_instance.default.name
+  spanner_state_name             = "${google_spanner_instance.default.name}-state"
+  spanner_state_processing_units = 100
+  terraform_spanner_state        = true
+  depends_on                     = [google_spanner_database.default]
+}
+
 # Databases Backup
 module "automated-db-backup" {
   count                  = (var.backup_enabled == true ? 1 : 0)
