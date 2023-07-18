@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+# random id to provide versioning for cloud functions.  This prevents 
+# thrashing of cloud functions when the terraform is applied.  Version should 
+# only be updated when the cloud function code is updated.
 resource "random_id" "suffix" {
   keepers = {
     version = "0.1.0"
@@ -22,7 +25,6 @@ resource "random_id" "suffix" {
 }
 
 // PubSub
-
 resource "google_pubsub_topic" "poller_topic" {
   name = "poller-topic-${random_id.suffix.hex}"
 }

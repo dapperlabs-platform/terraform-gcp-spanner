@@ -40,18 +40,14 @@ locals {
   ]))
 }
 
-resource "random_id" "suffix" {
-  byte_length = 4
-}
-
 # resource "google_app_engine_application" "app" {
 #   project     = var.project_id
 #   location_id = var.location
 # }
 
 resource "google_cloud_scheduler_job" "poller_job" {
-  name        = "poll-main-instance-metrics-${random_id.suffix.hex}"
-  description = "Poll metrics for main-instance"
+  name        = "poll-${var.spanner_name}-spanner-metrics"
+  description = "Poll metrics for ${var.spanner_name}"
   schedule    = var.schedule
   time_zone   = var.time_zone
 
