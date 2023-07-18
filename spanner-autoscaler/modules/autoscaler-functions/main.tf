@@ -14,12 +14,17 @@
  * limitations under the License.
  */
 
+# random id to provide versioning for cloud functions.  This prevents 
+# thrashing of cloud functions when the terraform is applied.  Version should 
+# only be updated when the cloud function code is updated.
 resource "random_id" "suffix" {
+  keepers = {
+    version = "0.1.0"
+  }
   byte_length = 4
 }
 
 // PubSub
-
 resource "google_pubsub_topic" "poller_topic" {
   name = "poller-topic-${random_id.suffix.hex}"
 }
@@ -59,9 +64,8 @@ resource "google_pubsub_topic_iam_member" "scaler_pubsub_sub_iam" {
 }
 
 // Cloud Functions
-
 resource "google_storage_bucket" "bucket_gcf_source" {
-  name                        = "${var.project_id}-gcf-source-${random_id.suffix.hex}"
+  name                        = "${var.spanner_name}-autoscaler-gcf-source"
   storage_class               = "REGIONAL"
   location                    = var.region
   force_destroy               = "true"
@@ -75,7 +79,7 @@ data "archive_file" "local_poller_source" {
 }
 
 resource "google_storage_bucket_object" "gcs_functions_poller_source" {
-  name   = "poller.${data.archive_file.local_poller_source.output_md5}.zip"
+  name   = "poller.${random_id.suffix.hex}.zip"
   bucket = google_storage_bucket.bucket_gcf_source.name
   source = data.archive_file.local_poller_source.output_path
 }
@@ -87,7 +91,7 @@ data "archive_file" "local_scaler_source" {
 }
 
 resource "google_storage_bucket_object" "gcs_functions_scaler_source" {
-  name   = "scaler.${data.archive_file.local_scaler_source.output_md5}.zip"
+  name   = "scaler.${random_id.suffix.hex}.zip"
   bucket = google_storage_bucket.bucket_gcf_source.name
   source = data.archive_file.local_scaler_source.output_path
 }

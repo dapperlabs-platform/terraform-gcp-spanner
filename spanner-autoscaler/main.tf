@@ -12,6 +12,7 @@ module "autoscaler-functions" {
   poller_sa_email = module.autoscaler-base.poller_sa_email
   region          = var.region
   scaler_sa_email = module.autoscaler-base.scaler_sa_email
+  spanner_name    = var.spanner_name
 }
 
 module "spanner" {
