@@ -46,3 +46,8 @@ variable "forwarder_sa_emails" {
   // Example ["serviceAccount:forwarder_sa@app-project.iam.gserviceaccount.com"]
   default = []
 }
+
+variable "spanner_name" {
+  description = "Name of the Spanner instance to be autoscaled."
+  type        = string
+}
