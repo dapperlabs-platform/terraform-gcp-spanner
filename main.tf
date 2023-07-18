@@ -22,13 +22,8 @@ resource "google_spanner_instance" "default" {
   processing_units = var.processing_units
   labels           = var.labels
 
-  dynamic "lifecycle" {
-    for_each = var.autoscale_enabled == true ? ["true"] : []
-    content {
-      lifecycle {
-        ignore_changes = [processing_units]
-      }
-    }
+  lifecycle {
+    ignore_changes = var.autoscale_enabled == true ? [processing_units] : []
   }
 }
 
