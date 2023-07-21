@@ -80,5 +80,4 @@ module "automated-db-backup" {
   backup_schedule        = var.backup_schedule
   backup_schedule_region = var.backup_schedule_region
   backup_time_zone       = var.backup_time_zone
-  short_name             = local.short_name
 }
