@@ -12,7 +12,7 @@ module "autoscaler-functions" {
   poller_sa_email = module.autoscaler-base.poller_sa_email
   region          = var.region
   scaler_sa_email = module.autoscaler-base.scaler_sa_email
-  spanner_name    = var.spanner_name
+  bucket_gcf_name = var.bucket_gcf_name
 }
 
 module "spanner" {
@@ -33,6 +33,7 @@ module "scheduler" {
 
   max_size                  = var.max_size
   min_size                  = var.min_size
+  poller_job_name           = var.poller_job_name
   project_id                = var.project_id
   pubsub_topic              = module.autoscaler-functions.poller_topic
   scale_in_cooling_minutes  = var.scale_in_cooling_minutes

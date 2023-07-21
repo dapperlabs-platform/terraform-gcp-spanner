@@ -46,7 +46,7 @@ locals {
 # }
 
 resource "google_cloud_scheduler_job" "poller_job" {
-  name        = "poll-${var.spanner_name}-spanner-metrics"
+  name        = var.poller_job_name
   description = "Poll metrics for ${var.spanner_name}"
   schedule    = var.schedule
   time_zone   = var.time_zone

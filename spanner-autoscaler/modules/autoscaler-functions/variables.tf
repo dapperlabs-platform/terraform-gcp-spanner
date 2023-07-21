@@ -47,7 +47,7 @@ variable "forwarder_sa_emails" {
   default = []
 }
 
-variable "spanner_name" {
-  description = "Name of the Spanner instance to be autoscaled."
+variable "bucket_gcf_name" {
   type        = string
+  description = "Name of the GCF bucket that will be created to hold the source files for the poller and scaler functions.  Useful for name or name length conflicts."
 }

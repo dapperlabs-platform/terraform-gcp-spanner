@@ -9,8 +9,10 @@ locals {
       }
     ]
   ])
-  databases    = { for db in var.databases : db.name => db }
-  database_ids = [for item in var.databases : item.name]
+  autoscale_bucket_gcf_name = var.autoscale_bucket_gcf_name != "" ? var.autoscale_bucket_gcf_name : "${var.name}-autoscaler-gcf-source"
+  autoscale_poller_job_name = var.autoscale_poller_job_name != "" ? var.autoscale_poller_job_name : "poll-${var.name}-spanner-metrics"
+  databases                 = { for db in var.databases : db.name => db }
+  database_ids              = [for item in var.databases : item.name]
 }
 
 data "google_client_config" "this" {}
@@ -50,9 +52,11 @@ module "db-iam" {
 module "db-autoscaler" {
   count                          = (var.autoscale_enabled == true ? 1 : 0)
   source                         = "./spanner-autoscaler"
-  project_id                     = data.google_client_config.this.project
+  bucket_gcf_name                = local.autoscale_bucket_gcf_name
   max_size                       = var.autoscale_max_size
   min_size                       = var.autoscale_min_size
+  poller_job_name                = local.autoscale_poller_job_name
+  project_id                     = data.google_client_config.this.project
   scale_in_cooling_minutes       = var.autoscale_in_cooling_minutes
   scale_out_cooling_minutes      = var.autoscale_out_cooling_minutes
   scaling_method                 = var.autoscale_method
@@ -76,4 +80,5 @@ module "automated-db-backup" {
   backup_schedule        = var.backup_schedule
   backup_schedule_region = var.backup_schedule_region
   backup_time_zone       = var.backup_time_zone
+  short_name             = local.short_name
 }

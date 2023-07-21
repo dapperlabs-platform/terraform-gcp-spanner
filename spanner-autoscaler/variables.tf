@@ -62,3 +62,13 @@ variable "terraform_spanner_state" {
   type        = bool
   default     = false
 }
+
+variable "bucket_gcf_name" {
+  type        = string
+  description = "Name of the GCF bucket that will be created to hold the source files for the poller and scaler functions.  Useful for name or name length conflicts."
+}
+
+variable "poller_job_name" {
+  type        = string
+  description = "Override the name used for the poller job.  Useful if the generated name is too long or has a conflict."
+}
