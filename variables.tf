@@ -130,6 +130,12 @@ variable "backup_schedule" {
   default     = "0 0 * * *"
 }
 
+variable "backup_schedule_name" {
+  type        = string
+  default     = ""
+  description = "Override the name used for the schedule.  Useful if the generated name is too long or has a conflict."
+}
+
 variable "backup_schedule_region" {
   description = "The schedule to be enabled on scheduler to trigger spanner DB backup"
   type        = string

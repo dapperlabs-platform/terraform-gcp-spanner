@@ -78,6 +78,7 @@ module "automated-db-backup" {
   backup_deadline        = var.backup_deadline
   backup_expire_time     = var.backup_expire_time
   backup_schedule        = var.backup_schedule
+  backup_schedule_name   = var.backup_schedule_name
   backup_schedule_region = var.backup_schedule_region
   backup_time_zone       = var.backup_time_zone
 }
