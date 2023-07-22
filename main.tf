@@ -59,7 +59,7 @@ module "db-autoscaler" {
   scale_out_cooling_minutes      = var.autoscale_out_cooling_minutes
   scaling_method                 = var.autoscale_method
   schedule                       = var.autoscale_schedule
-  spanner_alias_name             = google_spanner_instance.default.name
+  spanner_alias_name             = local.alias_name
   spanner_name                   = google_spanner_instance.default.name
   spanner_state_name             = "${google_spanner_instance.default.name}-state"
   spanner_state_processing_units = 100
@@ -73,7 +73,7 @@ module "automated-db-backup" {
   source                 = "github.com/dapperlabs-platform/terraform-gcp-spanner-backup?ref=instance_alias"
   database_names         = local.database_ids
   instance_name          = google_spanner_instance.default.name
-  instance_alias_name    = var.backup_schedule_name
+  instance_alias_name    = local.alias_name
   project_name           = data.google_client_config.this.project
   backup_deadline        = var.backup_deadline
   backup_expire_time     = var.backup_expire_time
