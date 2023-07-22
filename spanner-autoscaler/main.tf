@@ -8,11 +8,11 @@ module "autoscaler-base" {
 module "autoscaler-functions" {
   source = "./modules/autoscaler-functions"
 
-  project_id      = var.project_id
-  poller_sa_email = module.autoscaler-base.poller_sa_email
-  region          = var.region
-  scaler_sa_email = module.autoscaler-base.scaler_sa_email
-  bucket_gcf_name = var.bucket_gcf_name
+  project_id         = var.project_id
+  poller_sa_email    = module.autoscaler-base.poller_sa_email
+  region             = var.region
+  scaler_sa_email    = module.autoscaler-base.scaler_sa_email
+  spanner_alias_name = var.spanner_alias_name
 }
 
 module "spanner" {
