@@ -9,10 +9,10 @@ locals {
       }
     ]
   ])
-  alias_name   = var.aias_name != null ? var.aias_name : var.name
+  alias_name   = var.alias_name != "" ? var.alias_name : var.name
   databases    = { for db in var.databases : db.name => db }
   database_ids = [for item in var.databases : item.name]
-  display_name = var.display_name != null ? var.display_name : var.name
+  display_name = var.display_name != "" ? var.display_name : var.name
 }
 
 data "google_client_config" "this" {}
