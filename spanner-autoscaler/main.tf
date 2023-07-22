@@ -33,13 +33,13 @@ module "scheduler" {
 
   max_size                  = var.max_size
   min_size                  = var.min_size
-  poller_job_name           = var.poller_job_name
   project_id                = var.project_id
   pubsub_topic              = module.autoscaler-functions.poller_topic
   scale_in_cooling_minutes  = var.scale_in_cooling_minutes
   scale_out_cooling_minutes = var.scale_out_cooling_minutes
   scaling_method            = var.scaling_method
   schedule                  = var.schedule
+  spanner_alias_name        = var.spanner_alias_name
   spanner_name              = var.spanner_name
   spanner_state_name        = var.spanner_state_name
   target_pubsub_topic       = module.autoscaler-functions.scaler_topic

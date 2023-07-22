@@ -42,6 +42,11 @@ variable "schedule" {
   default = "*/2 * * * *"
 }
 
+variable "spanner_alias_name" {
+  type        = string
+  description = "Alias for the spanner instance.  Useful for name length conflicts."
+}
+
 variable "spanner_name" {
   type    = string
   default = "autoscale-test"
@@ -61,14 +66,4 @@ variable "terraform_spanner_state" {
   description = "If set to true, Terraform will create a Cloud Spanner instance and DB to hold the Autoscaler state."
   type        = bool
   default     = false
-}
-
-variable "bucket_gcf_name" {
-  type        = string
-  description = "Name of the GCF bucket that will be created to hold the source files for the poller and scaler functions.  Useful for name or name length conflicts."
-}
-
-variable "poller_job_name" {
-  type        = string
-  description = "Override the name used for the poller job.  Useful if the generated name is too long or has a conflict."
 }

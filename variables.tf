@@ -1,3 +1,15 @@
+variable "alias_name" {
+  type        = string
+  description = "The alias to use for naming dependent objects, such as service accounts, for the instance to avoid name/length conflicts"
+  default     = ""
+}
+
+variable "display_name" {
+  type        = string
+  description = "The display name of the instance"
+  default     = ""
+}
+
 variable "name" {
   type        = string
   description = "The name of the instance"

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 variable "project_id" {
   type = string
 }
@@ -105,7 +105,7 @@ variable "json_config" {
   description = "Base 64 encoded json that is the autoscaler configuration for the Cloud Scheduler payload. Using this allows for setting autoscaler configuration for multiple spanners and parameters that are not directly exposed through variables."
 }
 
-variable "poller_job_name" {
+variable "spanner_alias_name" {
   type        = string
-  description = "Override the name used for the poller job.  Useful if the generated name is too long or has a conflict."
+  description = "Alias for the spanner instance.  Useful for name length conflicts."
 }

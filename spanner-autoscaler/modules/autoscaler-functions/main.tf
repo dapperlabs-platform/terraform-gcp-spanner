@@ -65,7 +65,7 @@ resource "google_pubsub_topic_iam_member" "scaler_pubsub_sub_iam" {
 
 // Cloud Functions
 resource "google_storage_bucket" "bucket_gcf_source" {
-  name                        = var.bucket_gcf_name
+  name                        = "${var.spanner_alias_name}-gcf-source-${random_id.suffix.hex}"
   storage_class               = "REGIONAL"
   location                    = var.region
   force_destroy               = "true"

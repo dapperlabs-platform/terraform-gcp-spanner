@@ -47,7 +47,7 @@ variable "forwarder_sa_emails" {
   default = []
 }
 
-variable "bucket_gcf_name" {
+variable "spanner_alias_name" {
   type        = string
-  description = "Name of the GCF bucket that will be created to hold the source files for the poller and scaler functions.  Useful for name or name length conflicts."
+  description = "Alias for the spanner instance.  Useful for name length conflicts."
 }
