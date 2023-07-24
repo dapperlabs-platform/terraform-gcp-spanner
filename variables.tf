@@ -1,3 +1,15 @@
+variable "alias_name" {
+  type        = string
+  description = "The alias to use for naming dependent objects, such as service accounts, for the instance to avoid name/length conflicts"
+  default     = ""
+}
+
+variable "display_name" {
+  type        = string
+  description = "The display name of the instance"
+  default     = ""
+}
+
 variable "name" {
   type        = string
   description = "The name of the instance"
@@ -53,6 +65,12 @@ variable "deletion_protection" {
 }
 
 # Optional Autoscaling
+variable "autoscale_bucket_gcf_name" {
+  type        = string
+  default     = ""
+  description = "Name of the GCF bucket that will be created to hold the source files for the poller and scaler functions.  Useful for name or name length conflicts."
+}
+
 variable "autoscale_enabled" {
   type        = bool
   description = "Enable autoscaling for the spanner instance"
@@ -89,6 +107,12 @@ variable "autoscale_min_size" {
   description = "Minimum size that the spanner instance can be scaled in to."
 }
 
+variable "autoscale_poller_job_name" {
+  type        = string
+  default     = ""
+  description = "Override the name used for the poller job.  Useful if the generated name is too long or has a conflict."
+}
+
 variable "autoscale_schedule" {
   type    = string
   default = "*/2 * * * *"
@@ -116,6 +140,12 @@ variable "backup_schedule" {
   description = "The Backup Schedule in CRON format"
   type        = string
   default     = "0 0 * * *"
+}
+
+variable "backup_schedule_name" {
+  type        = string
+  default     = ""
+  description = "Override the name used for the schedule.  Useful if the generated name is too long or has a conflict."
 }
 
 variable "backup_schedule_region" {

@@ -42,6 +42,11 @@ variable "schedule" {
   default = "*/2 * * * *"
 }
 
+variable "spanner_alias_name" {
+  type        = string
+  description = "Alias for the spanner instance.  Useful for name length conflicts."
+}
+
 variable "spanner_name" {
   type    = string
   default = "autoscale-test"

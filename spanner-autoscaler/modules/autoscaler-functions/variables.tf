@@ -47,7 +47,7 @@ variable "forwarder_sa_emails" {
   default = []
 }
 
-variable "spanner_name" {
-  description = "Name of the Spanner instance to be autoscaled."
+variable "spanner_alias_name" {
   type        = string
+  description = "Alias for the spanner instance.  Useful for name length conflicts."
 }

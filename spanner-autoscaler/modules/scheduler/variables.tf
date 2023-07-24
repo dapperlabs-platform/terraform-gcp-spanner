@@ -104,3 +104,8 @@ variable "json_config" {
   default     = ""
   description = "Base 64 encoded json that is the autoscaler configuration for the Cloud Scheduler payload. Using this allows for setting autoscaler configuration for multiple spanners and parameters that are not directly exposed through variables."
 }
+
+variable "spanner_alias_name" {
+  type        = string
+  description = "Alias for the spanner instance.  Useful for name length conflicts."
+}

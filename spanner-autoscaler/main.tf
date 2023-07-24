@@ -8,11 +8,11 @@ module "autoscaler-base" {
 module "autoscaler-functions" {
   source = "./modules/autoscaler-functions"
 
-  project_id      = var.project_id
-  poller_sa_email = module.autoscaler-base.poller_sa_email
-  region          = var.region
-  scaler_sa_email = module.autoscaler-base.scaler_sa_email
-  spanner_name    = var.spanner_name
+  project_id         = var.project_id
+  poller_sa_email    = module.autoscaler-base.poller_sa_email
+  region             = var.region
+  scaler_sa_email    = module.autoscaler-base.scaler_sa_email
+  spanner_alias_name = var.spanner_alias_name
 }
 
 module "spanner" {
@@ -39,6 +39,7 @@ module "scheduler" {
   scale_out_cooling_minutes = var.scale_out_cooling_minutes
   scaling_method            = var.scaling_method
   schedule                  = var.schedule
+  spanner_alias_name        = var.spanner_alias_name
   spanner_name              = var.spanner_name
   spanner_state_name        = var.spanner_state_name
   target_pubsub_topic       = module.autoscaler-functions.scaler_topic
