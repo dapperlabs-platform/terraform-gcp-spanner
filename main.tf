@@ -61,7 +61,7 @@ module "db-autoscaler" {
   schedule                       = var.autoscale_schedule
   spanner_alias_name             = local.alias_name
   spanner_name                   = google_spanner_instance.default.name
-  spanner_state_name             = "${google_spanner_instance.default.name}-state"
+  spanner_state_name             = "${local.alias_name}-state"
   spanner_state_processing_units = 100
   terraform_spanner_state        = true
   depends_on                     = [google_spanner_database.default]
