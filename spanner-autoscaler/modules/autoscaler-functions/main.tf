@@ -82,6 +82,10 @@ resource "google_storage_bucket_object" "gcs_functions_poller_source" {
   name   = "poller.${random_id.suffix.hex}.zip"
   bucket = google_storage_bucket.bucket_gcf_source.name
   source = data.archive_file.local_poller_source.output_path
+
+  lifecycle {
+    ignore_changes = [detect_md5hash]
+  }
 }
 
 data "archive_file" "local_scaler_source" {
@@ -94,6 +98,10 @@ resource "google_storage_bucket_object" "gcs_functions_scaler_source" {
   name   = "scaler.${random_id.suffix.hex}.zip"
   bucket = google_storage_bucket.bucket_gcf_source.name
   source = data.archive_file.local_scaler_source.output_path
+
+  lifecycle {
+    ignore_changes = [detect_md5hash]
+  }
 }
 
 resource "google_cloudfunctions_function" "poller_function" {
