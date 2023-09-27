@@ -15,8 +15,6 @@ locals {
   display_name = var.display_name != "" ? var.display_name : var.name
 }
 
-data "google_client_config" "this" {}
-
 resource "google_spanner_instance" "default" {
   config           = var.config
   display_name     = local.display_name
@@ -54,7 +52,7 @@ module "db-autoscaler" {
   source                         = "./spanner-autoscaler"
   max_size                       = var.autoscale_max_size
   min_size                       = var.autoscale_min_size
-  project_id                     = data.google_client_config.this.project
+  project_id                     = var.project_id
   scale_in_cooling_minutes       = var.autoscale_in_cooling_minutes
   scale_out_cooling_minutes      = var.autoscale_out_cooling_minutes
   scaling_method                 = var.autoscale_method
@@ -74,7 +72,7 @@ module "automated-db-backup" {
   database_names         = local.database_ids
   instance_name          = google_spanner_instance.default.name
   instance_alias_name    = local.alias_name
-  project_name           = data.google_client_config.this.project
+  project_name           = var.project_id
   backup_deadline        = var.backup_deadline
   backup_expire_time     = var.backup_expire_time
   backup_schedule        = var.backup_schedule

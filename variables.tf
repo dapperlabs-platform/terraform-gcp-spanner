@@ -1,3 +1,8 @@
+variable "project_id" {
+  type        = string
+  description = "The name of the GCP project"
+}
+
 variable "alias_name" {
   type        = string
   description = "The alias to use for naming dependent objects, such as service accounts, for the instance to avoid name/length conflicts"
