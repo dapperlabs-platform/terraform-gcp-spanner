@@ -21,6 +21,10 @@ resource "google_spanner_instance" "default" {
   name             = var.name
   processing_units = var.autoscale_enabled == true ? var.autoscale_min_size : var.processing_units
   labels           = var.labels
+
+  lifecycle {
+    ignore_changes = [processing_units]
+  }
 }
 
 resource "google_spanner_database" "default" {
