@@ -19,6 +19,7 @@ resource "google_spanner_instance" "default" {
   config           = var.config
   display_name     = local.display_name
   name             = var.name
+  edition          = var.edition
   processing_units = var.autoscale_enabled == true ? null : var.processing_units
 
   dynamic "autoscaling_config" {

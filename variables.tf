@@ -26,6 +26,12 @@ variable "labels" {
   default     = {}
 }
 
+variable "edition" {
+  type        = string
+  description = "The instance's configuration (e.g. regional-us-central1, regional-europe-west1, regional-asia-east1, multi-regional-us)"
+  default     = "ENTERPRISE"
+}
+
 variable "instance_iam" {
   type = list(object({
     role    = string
