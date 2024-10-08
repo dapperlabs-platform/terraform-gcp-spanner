@@ -152,3 +152,15 @@ variable "backup_time_zone" {
   type        = string
   default     = "America/Vancouver"
 }
+
+variable "autoscale_cpu_utilization" {
+  description = "What percentage of CPU utilization should trigger autoscaling"
+  type        = number
+  default     = 75
+}
+
+variable "autoscale_storage_utilization" {
+  description = "What percentage of storage utilization should trigger autoscaling"
+  type        = number
+  default     = 90
+}
