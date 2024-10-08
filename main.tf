@@ -19,11 +19,21 @@ resource "google_spanner_instance" "default" {
   config           = var.config
   display_name     = local.display_name
   name             = var.name
-  processing_units = var.autoscale_enabled == true ? var.autoscale_min_size : var.processing_units
-  labels           = var.labels
+  edition          = var.edition
+  processing_units = var.autoscale_enabled == true ? null : var.processing_units
 
-  lifecycle {
-    ignore_changes = [processing_units]
+  dynamic "autoscaling_config" {
+    for_each = var.autoscale_enabled == true ? [1] : []
+    content {
+      autoscaling_limits {
+        max_processing_units = var.autoscale_max_size
+        min_processing_units = var.autoscale_min_size
+      }
+      autoscaling_targets {
+        high_priority_cpu_utilization_percent = var.autoscale_cpu_utilization
+        storage_utilization_percent           = var.autoscale_storage_utilization
+      }
+    }
   }
 }
 
@@ -50,29 +60,10 @@ module "db-iam" {
   depends_on = [google_spanner_database.default]
 }
 
-# Database Autoscaler
-module "db-autoscaler" {
-  count                          = (var.autoscale_enabled == true ? 1 : 0)
-  source                         = "./spanner-autoscaler"
-  max_size                       = var.autoscale_max_size
-  min_size                       = var.autoscale_min_size
-  project_id                     = var.project_id
-  scale_in_cooling_minutes       = var.autoscale_in_cooling_minutes
-  scale_out_cooling_minutes      = var.autoscale_out_cooling_minutes
-  scaling_method                 = var.autoscale_method
-  schedule                       = var.autoscale_schedule
-  spanner_alias_name             = local.alias_name
-  spanner_name                   = google_spanner_instance.default.name
-  spanner_state_name             = "${local.alias_name}-state"
-  spanner_state_processing_units = 100
-  terraform_spanner_state        = true
-  depends_on                     = [google_spanner_database.default]
-}
-
 # Databases Backup
 module "automated-db-backup" {
   count                  = (var.backup_enabled == true ? 1 : 0)
-  source                 = "github.com/dapperlabs-platform/terraform-gcp-spanner-backup?ref=v0.2.4"
+  source                 = "github.com/dapperlabs-platform/terraform-gcp-spanner-backup?ref=v0.2.5"
   database_names         = local.database_ids
   instance_name          = google_spanner_instance.default.name
   instance_alias_name    = local.alias_name

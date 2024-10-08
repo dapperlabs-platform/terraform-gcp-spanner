@@ -26,6 +26,12 @@ variable "labels" {
   default     = {}
 }
 
+variable "edition" {
+  type        = string
+  description = "The instance's configuration (e.g. regional-us-central1, regional-europe-west1, regional-asia-east1, multi-regional-us)"
+  default     = "ENTERPRISE"
+}
+
 variable "instance_iam" {
   type = list(object({
     role    = string
@@ -151,4 +157,16 @@ variable "backup_time_zone" {
   description = "The timezone to be used for the backup schedule"
   type        = string
   default     = "America/Vancouver"
+}
+
+variable "autoscale_cpu_utilization" {
+  description = "What percentage of CPU utilization should trigger autoscaling"
+  type        = number
+  default     = 75
+}
+
+variable "autoscale_storage_utilization" {
+  description = "What percentage of storage utilization should trigger autoscaling"
+  type        = number
+  default     = 90
 }
