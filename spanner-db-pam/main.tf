@@ -10,9 +10,7 @@ resource "google_privileged_access_manager_entitlement" "entitlement" {
     unstructured {}
   }
   eligible_users {
-    principals = [
-      var.pam_access[each.key].requesters
-    ]
+    principals = var.pam_access[each.key].requesters
   }
   privileged_access {
     gcp_iam_access {
