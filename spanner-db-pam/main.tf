@@ -1,21 +1,21 @@
 
 resource "google_privileged_access_manager_entitlement" "entitlement" {
-  count = length(var.pam_access)
+  for_each = var.pam_access
 
-  entitlement_id       = var.pam_access[each.key].name
+  entitlement_id       = each.value.name
   location             = "global"
-  max_request_duration = var.pam_access[each.key].max_time
+  max_request_duration = each.value.max_time
   parent               = "projects/${var.project_name}"
   requester_justification_config {
     unstructured {}
   }
   eligible_users {
-    principals = var.pam_access[each.key].requesters
+    principals = each.value.requesters
   }
   privileged_access {
     gcp_iam_access {
       role_bindings {
-        role = "roles/spanner.database${var.pam_access[each.key].role}"
+        role = "roles/spanner.database${each.value.role}"
         #condition_expression = "request.time < timestamp(\"2024-04-23T18:30:00.000Z\")"
       }
       resource      = "//cloudresourcemanager.googleapis.com/projects/${var.project_name}"
@@ -32,15 +32,15 @@ resource "google_privileged_access_manager_entitlement" "entitlement" {
   # }
 
   dynamic "approval_workflow" {
-    for_each = var.pam_access[each.key].auto_approve == true ? [] : [1]
+    for_each = each.value.auto_approve == true ? [] : [1]
     content {
       manual_approvals {
         require_approver_justification = true
         steps {
-          approvals_needed          = var.pam_access[each.key].approval
-          approver_email_recipients = var.pam_access[each.key].approvers
+          approvals_needed          = each.value.approval
+          approver_email_recipients = each.value.approvers
           approvers {
-            principals = var.pam_access[each.key].approvers
+            principals = each.value.approvers
           }
         }
       }
