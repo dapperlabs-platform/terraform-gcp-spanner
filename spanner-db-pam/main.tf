@@ -32,13 +32,13 @@ resource "google_privileged_access_manager_entitlement" "entitlement" {
   # }
 
   dynamic "approval_workflow" {
-    for_each = each.value.auto_approve == true ? [] : [1]
+    for_each = value.auto_approve == true ? [] : [1]
     content {
       manual_approvals {
         require_approver_justification = true
         steps {
           approvals_needed          = 1
-          approver_email_recipients = each.value.approvers
+          approver_email_recipients = trimprefix(each.value.approvers, "user:", "group:")
           approvers {
             principals = each.value.approvers
           }
