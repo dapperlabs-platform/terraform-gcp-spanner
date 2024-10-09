@@ -1,6 +1,6 @@
 
 resource "google_privileged_access_manager_entitlement" "entitlement" {
-  for_each = var.pam_access
+  count = length(var.pam_access)
 
   entitlement_id       = var.pam_access[each.key].name
   location             = "global"
@@ -30,17 +30,20 @@ resource "google_privileged_access_manager_entitlement" "entitlement" {
   #     local.pam_access[each.key].requesters
   #   ]
   # }
-  approval_workflow {
-    manual_approvals {
-      require_approver_justification = true
-      steps {
-        approvals_needed          = 1
-        approver_email_recipients = var.pam_access[each.key].approvers
-        approvers {
-          principals = var.pam_access[each.key].approvers
+
+  dynamic "approval_workflow" {
+    for_each = var.pam_access[each.key].auto_approve == true ? [] : [1]
+    content {
+      manual_approvals {
+        require_approver_justification = true
+        steps {
+          approvals_needed          = var.pam_access[each.key].approval
+          approver_email_recipients = var.pam_access[each.key].approvers
+          approvers {
+            principals = var.pam_access[each.key].approvers
+          }
         }
       }
     }
   }
 }
-
