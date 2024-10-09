@@ -60,6 +60,22 @@ module "db-iam" {
   depends_on = [google_spanner_database.default]
 }
 
+# Database PAM
+module "db-pam" {
+  source       = "./spanner-db-pam"
+  for_each     = var.pam_access
+  project_name = var.project_id
+  pam_access = {
+    role = {
+      name       = var.pam_access[each.key].name
+      role       = var.pam_access[each.key].role
+      max_time   = var.pam_access[each.key].max_time
+      requesters = var.pam_access[each.key].requesters
+      approvers  = var.pam_access[each.key].requesters
+    }
+  }
+}
+
 # Databases Backup
 module "automated-db-backup" {
   count                  = (var.backup_enabled == true ? 1 : 0)

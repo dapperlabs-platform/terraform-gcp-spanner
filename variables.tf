@@ -170,3 +170,14 @@ variable "autoscale_storage_utilization" {
   type        = number
   default     = 90
 }
+
+variable "pam_access" {
+  type = map(object({
+    name       = string
+    role       = string
+    max_time   = string
+    requesters = list(string)
+    approvers  = list(string)
+  }))
+
+}
