@@ -72,7 +72,7 @@ module "db-pam" {
       max_time     = var.pam_access[each.key].max_time
       auto_approve = var.pam_access[each.key].auto_approve
       requesters   = var.pam_access[each.key].requesters
-      approvers    = var.pam_access[each.key].requesters
+      approvers    = var.pam_access[each.key].approvers
     }
   }
 }
