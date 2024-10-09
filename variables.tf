@@ -178,6 +178,6 @@ variable "pam_access" {
     max_time     = string
     auto_approve = bool
     requesters   = list(string)
-    approvers    = list(string)
+    approvers    = optional(list(string)) #Required if auto_approve is true
   }))
 }
