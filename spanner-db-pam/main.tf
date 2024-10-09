@@ -1,6 +1,6 @@
 
 resource "google_privileged_access_manager_entitlement" "entitlement" {
-  for_each = var.pam_accesss
+  for_each = var.pam_access
 
   entitlement_id       = each.value.name
   location             = "global"
