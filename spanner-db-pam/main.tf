@@ -38,7 +38,7 @@ resource "google_privileged_access_manager_entitlement" "entitlement" {
         require_approver_justification = true
         steps {
           approvals_needed          = 1
-          approver_email_recipients = trimprefix(each.value.approvers, "user: group:")
+          approver_email_recipients = each.value.approvers_email
           approvers {
             principals = each.value.approvers
           }

@@ -67,12 +67,13 @@ module "db-pam" {
   project_name = var.project_id
   pam_access = {
     role = {
-      name         = var.pam_access[each.key].name
-      role         = var.pam_access[each.key].role
-      max_time     = var.pam_access[each.key].max_time
-      auto_approve = var.pam_access[each.key].auto_approve
-      requesters   = var.pam_access[each.key].requesters
-      approvers    = var.pam_access[each.key].approvers
+      name            = var.pam_access[each.key].name
+      role            = var.pam_access[each.key].role
+      max_time        = var.pam_access[each.key].max_time
+      auto_approve    = var.pam_access[each.key].auto_approve
+      requesters      = var.pam_access[each.key].requesters
+      approvers       = var.pam_access[each.key].approvers
+      approvers_email = var.pam_access[each.key].approvers_email
     }
   }
 }
