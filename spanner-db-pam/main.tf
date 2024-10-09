@@ -37,8 +37,7 @@ resource "google_privileged_access_manager_entitlement" "entitlement" {
       manual_approvals {
         require_approver_justification = true
         steps {
-          approvals_needed          = 1
-          approver_email_recipients = each.value.approvers_email
+          approvals_needed = 1
           approvers {
             principals = each.value.approvers
           }
