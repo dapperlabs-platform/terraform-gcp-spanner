@@ -61,6 +61,7 @@ module "cloud-spanner-instance" {
   }
 
     pam_access = {
+    # Manual grant
     "spanner-db-user" = {
       name         = "spanner-db-user-terraformed"
       role         = "User"
