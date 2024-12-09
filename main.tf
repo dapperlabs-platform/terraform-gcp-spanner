@@ -78,9 +78,9 @@ module "db-pam" {
 }
 
 resource "google_spanner_backup_schedule" "full-backup" {
-  count    = (var.backup_enabled == true ? 1 : 0)
+  for_each = var.backup_enabled ? local.databases : {}
   instance = google_spanner_instance.default.name
-  database = local.databases[0].name
+  database = each.value.name
   name     = var.name
 
   retention_duration = var.backup_expire_time // 366 days (maximum possible retention)
