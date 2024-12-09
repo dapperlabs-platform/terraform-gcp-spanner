@@ -83,7 +83,7 @@ resource "google_spanner_backup_schedule" "full-backup" {
   database = local.database_ids
   name     = var.name
 
-  retention_duration = vvar.backup_expire_time // 366 days (maximum possible retention)
+  retention_duration = var.backup_expire_time // 366 days (maximum possible retention)
 
   spec {
     cron_spec {
