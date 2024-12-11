@@ -77,17 +77,24 @@ module "db-pam" {
   }
 }
 
-# Databases Backup
-module "automated-db-backup" {
-  count                  = (var.backup_enabled == true ? 1 : 0)
-  source                 = "github.com/dapperlabs-platform/terraform-gcp-spanner-backup?ref=v0.2.5"
-  database_names         = local.database_ids
-  instance_name          = google_spanner_instance.default.name
-  instance_alias_name    = local.alias_name
-  project_name           = var.project_id
-  backup_deadline        = var.backup_deadline
-  backup_expire_time     = var.backup_expire_time
-  backup_schedule        = var.backup_schedule
-  backup_schedule_region = var.backup_schedule_region
-  backup_time_zone       = var.backup_time_zone
+resource "google_spanner_backup_schedule" "full-backup" {
+  for_each = var.backup_enabled ? local.databases : {}
+  instance = google_spanner_instance.default.name
+  database = each.value.name
+  name     = var.name
+
+  retention_duration = var.backup_expire_time // 366 days (maximum possible retention)
+
+  spec {
+    cron_spec {
+      //   0 2/12 * * * : every 12 hours at (2, 14) hours past midnight in UTC.
+      //   0 2,14 * * * : every 12 hours at (2,14) hours past midnight in UTC.
+      //   0 2 * * *    : once a day at 2 past midnight in UTC.
+      //   0 2 * * 0    : once a week every Sunday at 2 past midnight in UTC.
+      //   0 2 8 * *    : once a month on 8th day at 2 past midnight in UTC.
+      text = var.backup_schedule
+    }
+  }
+  // The schedule creates only full backups.
+  full_backup_spec {}
 }
