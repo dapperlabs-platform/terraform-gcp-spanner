@@ -132,7 +132,7 @@ variable "backup_deadline" {
 variable "backup_expire_time" {
   description = "Seconds until the backup expires"
   type        = string
-  default     = "604800" # 3 days
+  default     = "604800s" # 3 days, needs the 's' at the end
 }
 
 variable "backup_schedule" {
