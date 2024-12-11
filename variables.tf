@@ -131,8 +131,8 @@ variable "backup_deadline" {
 
 variable "backup_expire_time" {
   description = "Seconds until the backup expires"
-  type        = number
-  default     = 86400
+  type        = string
+  default     = "604800" # 3 days
 }
 
 variable "backup_schedule" {
