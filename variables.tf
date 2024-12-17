@@ -54,6 +54,7 @@ variable "databases" {
     collation           = string
     database_dialect    = optional(string, "GOOGLE_STANDARD_SQL")
     deletion_protection = optional(bool, false)
+    incremental_backup_enabled = optional(bool, false)
   }))
 }
 
@@ -122,13 +123,6 @@ variable "full_backup_enabled" {
   type        = bool
   description = "Enable Spanner Automated Databases Backup for the instance"
   default     = true
-}
-
-# Optional Database Incremental Backup
-variable "incremental_backup_enabled" {
-  description = "Enable Incremental Backups on Spanner"
-  type        = bool
-  default     = false
 }
 
 variable "backup_expire_time" {

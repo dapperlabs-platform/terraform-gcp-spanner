@@ -12,6 +12,7 @@ locals {
   alias_name   = var.alias_name != "" ? var.alias_name : var.name
   databases    = { for db in var.databases : db.name => db }
   database_ids = [for item in var.databases : item.name]
+  incremental_backup = { for k, v in local.databases : k => v if v.incremental_backup_enabled == true }
   display_name = var.display_name != "" ? var.display_name : var.name
 }
 
@@ -101,7 +102,7 @@ resource "google_spanner_backup_schedule" "full-backup" {
 }
 
 resource "google_spanner_backup_schedule" "incremental-backup" {
-  for_each = var.incremental_backup_enabled == true ? local.databases : {}
+  for_each = local.incremental_backup
   instance = google_spanner_instance.default.name
   database = each.value.name
   name = var.name
