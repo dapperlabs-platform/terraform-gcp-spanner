@@ -57,7 +57,7 @@ variable "databases" {
     full_backup_enabled = optional(bool, false)
     incremental_backup_enabled = optional(bool, false)
     backup_expire_time = optional(string, "604800s")
-    backup_schedule      = optional(string, "0 0 * * *")
+    backup_schedule      = optional(string, "0 0 * * *s")
     //   0 2/12 * * * : every 12 hours at (2, 14) hours past midnight in UTC.
     //   0 2,14 * * * : every 12 hours at (2,14) hours past midnight in UTC.
     //   0 2 * * *    : once a day at 2 past midnight in UTC.
