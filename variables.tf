@@ -54,7 +54,16 @@ variable "databases" {
     collation           = string
     database_dialect    = optional(string, "GOOGLE_STANDARD_SQL")
     deletion_protection = optional(bool, false)
+    full_backup_enabled = optional(bool, false)
     incremental_backup_enabled = optional(bool, false)
+    backup_expire_time = optional(string, "604800s")
+    backup_schedule      = optional(string, "0 0 * * *")
+    //   0 2/12 * * * : every 12 hours at (2, 14) hours past midnight in UTC.
+    //   0 2,14 * * * : every 12 hours at (2,14) hours past midnight in UTC.
+    //   0 2 * * *    : once a day at 2 past midnight in UTC.
+    //   0 2 * * 0    : once a week every Sunday at 2 past midnight in UTC.
+    //   0 2 8 * *    : once a month on 8th day at 2 past midnight in UTC.
+    
   }))
 }
 
@@ -116,31 +125,6 @@ variable "autoscale_min_size" {
 variable "autoscale_schedule" {
   type    = string
   default = "*/2 * * * *"
-}
-
-# Optional Database Backup
-variable "full_backup_enabled" {
-  type        = bool
-  description = "Enable Spanner Automated Databases Backup for the instance"
-  default     = true
-}
-
-variable "backup_expire_time" {
-  description = "Seconds until the backup expires"
-  type        = string
-  default     = "604800s" # 3 days, needs the 's' at the end
-}
-
-variable "backup_schedule" {
-  description = "The Backup Schedule in CRON format"
-  type        = string
-  default     = "0 0 * * *"
-}
-
-variable "incremental_schedule" {
-  description = "The Incremental Backup Schedule in CRON format"
-  type        = string
-  default     = "0 0 * * *"  
 }
 
 variable "backup_schedule_name" {
