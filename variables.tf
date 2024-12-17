@@ -118,15 +118,17 @@ variable "autoscale_schedule" {
 }
 
 # Optional Database Backup
-variable "backup_enabled" {
+variable "full_backup_enabled" {
   type        = bool
   description = "Enable Spanner Automated Databases Backup for the instance"
   default     = true
 }
-variable "backup_deadline" {
-  description = "The deadline for the backup schedule"
-  type        = string
-  default     = "320s"
+
+# Optional Database Incremental Backup
+variable "incremental_backup_enabled" {
+  description = "Enable Incremental Backups on Spanner"
+  type        = bool
+  default     = false
 }
 
 variable "backup_expire_time" {
@@ -139,6 +141,12 @@ variable "backup_schedule" {
   description = "The Backup Schedule in CRON format"
   type        = string
   default     = "0 0 * * *"
+}
+
+variable "incremental_schedule" {
+  description = "The Incremental Backup Schedule in CRON format"
+  type        = string
+  default     = "0 0 * * *"  
 }
 
 variable "backup_schedule_name" {
