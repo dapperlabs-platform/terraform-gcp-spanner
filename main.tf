@@ -103,7 +103,7 @@ resource "google_spanner_backup_schedule" "incremental-backup" {
   database = each.value.name
   name = "${each.value.name}"
 
-  retention_duration = each.value.backup_schedule
+  retention_duration = each.value.backup_expire_time
 
   spec {
     cron_spec {
