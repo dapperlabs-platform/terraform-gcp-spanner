@@ -12,6 +12,8 @@ locals {
   alias_name   = var.alias_name != "" ? var.alias_name : var.name
   databases    = { for db in var.databases : db.name => db }
   database_ids = [for item in var.databases : item.name]
+  full_backup = { for k, v in local.databases : k => v if v.full_backup_enabled == true }
+  incremental_backup = { for k, v in local.databases : k => v if v.incremental_backup_enabled == true }
   display_name = var.display_name != "" ? var.display_name : var.name
 }
 
@@ -77,24 +79,37 @@ module "db-pam" {
   }
 }
 
+# Full Backup
 resource "google_spanner_backup_schedule" "full-backup" {
-  for_each = var.backup_enabled ? local.databases : {}
+  for_each = local.full_backup
   instance = google_spanner_instance.default.name
   database = each.value.name
   name     = var.name
 
-  retention_duration = var.backup_expire_time // 366 days (maximum possible retention)
+  retention_duration = each.value.backup_expire_time 
 
   spec {
     cron_spec {
-      //   0 2/12 * * * : every 12 hours at (2, 14) hours past midnight in UTC.
-      //   0 2,14 * * * : every 12 hours at (2,14) hours past midnight in UTC.
-      //   0 2 * * *    : once a day at 2 past midnight in UTC.
-      //   0 2 * * 0    : once a week every Sunday at 2 past midnight in UTC.
-      //   0 2 8 * *    : once a month on 8th day at 2 past midnight in UTC.
-      text = var.backup_schedule
+      text = each.value.backup_schedule
     }
   }
   // The schedule creates only full backups.
   full_backup_spec {}
+}
+
+resource "google_spanner_backup_schedule" "incremental-backup" {
+  for_each = local.incremental_backup
+  instance = google_spanner_instance.default.name
+  database = each.value.name
+  name = "${each.value.name}"
+
+  retention_duration = each.value.backup_expire_time
+
+  spec {
+    cron_spec {
+      text = each.value.backup_schedule
+    }
+  }
+  // The schedule creates incremental backup chains.
+  incremental_backup_spec {}
 }
