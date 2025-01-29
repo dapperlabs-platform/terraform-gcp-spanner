@@ -9,12 +9,12 @@ locals {
       }
     ]
   ])
-  alias_name   = var.alias_name != "" ? var.alias_name : var.name
-  databases    = { for db in var.databases : db.name => db }
-  database_ids = [for item in var.databases : item.name]
-  full_backup = { for k, v in local.databases : k => v if v.full_backup_enabled == true }
+  alias_name         = var.alias_name != "" ? var.alias_name : var.name
+  databases          = { for db in var.databases : db.name => db }
+  database_ids       = [for item in var.databases : item.name]
+  full_backup        = { for k, v in local.databases : k => v if v.full_backup_enabled == true }
   incremental_backup = { for k, v in local.databases : k => v if v.incremental_backup_enabled == true }
-  display_name = var.display_name != "" ? var.display_name : var.name
+  display_name       = var.display_name != "" ? var.display_name : var.name
 }
 
 resource "google_spanner_instance" "default" {
@@ -62,23 +62,6 @@ module "db-iam" {
   depends_on = [google_spanner_database.default]
 }
 
-# Database PAM
-module "db-pam" {
-  source       = "./spanner-db-pam"
-  for_each     = var.pam_access
-  project_name = var.project_id
-  pam_access = {
-    role = {
-      name         = var.pam_access[each.key].name
-      role         = var.pam_access[each.key].role
-      max_time     = var.pam_access[each.key].max_time
-      auto_approve = var.pam_access[each.key].auto_approve
-      requesters   = var.pam_access[each.key].requesters
-      approvers    = var.pam_access[each.key].approvers
-    }
-  }
-}
-
 # Full Backup
 resource "google_spanner_backup_schedule" "full-backup" {
   for_each = local.full_backup
@@ -86,7 +69,7 @@ resource "google_spanner_backup_schedule" "full-backup" {
   database = each.value.name
   name     = var.name
 
-  retention_duration = each.value.backup_expire_time 
+  retention_duration = each.value.backup_expire_time
 
   spec {
     cron_spec {
@@ -101,7 +84,7 @@ resource "google_spanner_backup_schedule" "incremental-backup" {
   for_each = local.incremental_backup
   instance = google_spanner_instance.default.name
   database = each.value.name
-  name = "${each.value.name}"
+  name     = each.value.name
 
   retention_duration = each.value.backup_expire_time
 
