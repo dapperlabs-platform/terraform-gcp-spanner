@@ -49,21 +49,21 @@ variable "processing_units" {
 variable "databases" {
   description = "A list of databases to be created"
   type = list(object({
-    name                = string
-    charset             = string
-    collation           = string
-    database_dialect    = optional(string, "GOOGLE_STANDARD_SQL")
-    deletion_protection = optional(bool, false)
-    full_backup_enabled = optional(bool, false)
+    name                       = string
+    charset                    = string
+    collation                  = string
+    database_dialect           = optional(string, "GOOGLE_STANDARD_SQL")
+    deletion_protection        = optional(bool, false)
+    full_backup_enabled        = optional(bool, false)
     incremental_backup_enabled = optional(bool, false)
-    backup_expire_time = optional(string, "604800s")
-    backup_schedule      = optional(string, "0 0 * * *")
+    backup_expire_time         = optional(string, "604800s")
+    backup_schedule            = optional(string, "0 0 * * *")
     //   0 2/12 * * * : every 12 hours at (2, 14) hours past midnight in UTC.
     //   0 2,14 * * * : every 12 hours at (2,14) hours past midnight in UTC.
     //   0 2 * * *    : once a day at 2 past midnight in UTC.
     //   0 2 * * 0    : once a week every Sunday at 2 past midnight in UTC.
     //   0 2 8 * *    : once a month on 8th day at 2 past midnight in UTC.
-    
+
   }))
 }
 
@@ -155,16 +155,4 @@ variable "autoscale_storage_utilization" {
   description = "What percentage of storage utilization should trigger autoscaling"
   type        = number
   default     = 90
-}
-
-variable "pam_access" {
-  type = map(object({
-    name         = string
-    role         = string
-    max_time     = string
-    auto_approve = bool
-    requesters   = list(string)
-    approvers    = optional(list(string)) # Required if auto_approve is true
-  }))
-  default = {}
 }
